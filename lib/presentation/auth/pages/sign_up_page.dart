@@ -10,8 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
-
+  SignUpPage({super.key});
+  final TextEditingController _firstNameCon = TextEditingController();
+  final TextEditingController _lastNameCon = TextEditingController();
+  final TextEditingController _emailCon = TextEditingController();
+  final TextEditingController _passwordCon = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,23 +25,25 @@ class SignUpPage extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _signInText(context),
-            20.verticalSpace,
-            _firstNameField(context),
-            20.verticalSpace,
-            _lastNameField(context),
-            20.verticalSpace,
-            _emailField(context),
-            20.verticalSpace,
-            _passwordField(context),
-            20.verticalSpace,
-            _continueButton(context),
-            20.verticalSpace,
-            _createAccount(context)
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _signInText(context),
+              20.verticalSpace,
+              _firstNameField(),
+              20.verticalSpace,
+              _lastNameField(),
+              20.verticalSpace,
+              _emailField(context),
+              20.verticalSpace,
+              _passwordField(context),
+              20.verticalSpace,
+              _continueButton(context),
+              20.verticalSpace,
+              _createAccount(context)
+            ],
+          ),
         ),
       ),
     );
@@ -52,30 +57,33 @@ class SignUpPage extends StatelessWidget {
   }
 
   Widget _emailField(BuildContext context) {
-    return const TextField(
-      decoration: InputDecoration(
+    return TextField(
+      controller: _emailCon,
+      decoration: const InputDecoration(
           hintText: 'Email Address', border: OutlineInputBorder()),
     );
   }
 
-  Widget _firstNameField(BuildContext context) {
-    return const TextField(
-      decoration:
-          InputDecoration(hintText: 'First Name', border: OutlineInputBorder()),
+  Widget _firstNameField() {
+    return TextField(
+      controller: _firstNameCon,
+      decoration: const InputDecoration(hintText: 'Firstname'),
     );
   }
 
-  Widget _lastNameField(BuildContext context) {
-    return const TextField(
-      decoration:
-          InputDecoration(hintText: 'Last Name', border: OutlineInputBorder()),
+  Widget _lastNameField() {
+    return TextField(
+      controller: _lastNameCon,
+      decoration: const InputDecoration(
+          hintText: 'Last Name', border: OutlineInputBorder()),
     );
   }
 
   Widget _passwordField(BuildContext context) {
-    return const TextField(
-      decoration:
-          InputDecoration(hintText: 'Password', border: OutlineInputBorder()),
+    return TextField(
+      controller: _passwordCon,
+      decoration: const InputDecoration(
+          hintText: 'Password', border: OutlineInputBorder()),
     );
   }
 
@@ -86,10 +94,10 @@ class SignUpPage extends StatelessWidget {
             context,
             GenderAndAgeSelectionPage(
                 userCreationReq: UserCreationReq(
-              firstName: '',
-              lastName: '',
-              email: '',
-              password: '',
+              firstName: _firstNameCon.text,
+              lastName: _lastNameCon.text,
+              email: _emailCon.text,
+              password: _emailCon.text,
             )));
       },
       title: 'Continue',
